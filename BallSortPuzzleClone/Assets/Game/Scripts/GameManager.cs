@@ -24,19 +24,21 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // if (Screen.height / Screen.width > 2.222f)//proporção de 9:20
-            // {
-            //     Camera.main.aspect = 9f / 20f;
-            // }
-            // else if (Screen.height / Screen.width > 2f)//proporção de 9:18
-            // {
-            //     Camera.main.aspect = 9f / 18f;
-            // }
-            // else//proporção de 9/16 -- 1.777
-            // {
-            //     Camera.main.aspect = 9f / 16f;
-            // }
+            if (Screen.height / Screen.width > 2.222f)//proporção de 9:20
+            {
+                Camera.main.aspect = 9f / 20f;
+            }
+            else if (Screen.height / Screen.width > 2f)//proporção de 9:18
+            {
+                Camera.main.aspect = 9f / 18f;
+            }
+            else//proporção de 9/16 -- 1.777
+            {
+                Camera.main.aspect = 9f / 16f;
+            }
         }
+
+        level = -1;
     }
 
     private void OnDestroy()
@@ -53,6 +55,11 @@ public class GameManager : MonoBehaviour
         //SaveData();//salvando dados
 
         //carregar o level
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void ReloadLevel()
+    {
         SceneManager.LoadScene("SampleScene");
     }
     
