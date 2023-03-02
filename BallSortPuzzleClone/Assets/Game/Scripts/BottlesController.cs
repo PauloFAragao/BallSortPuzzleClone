@@ -1,9 +1,16 @@
 using UnityEngine;
+using TMPro;
 
 public class BottlesController : MonoBehaviour
 {
     //prefab dos recipientes
     [SerializeField] private BottleController bottlePrefab;
+
+    //tela de fim de fase
+    [SerializeField] private GameObject LevelDoneScreen;
+
+    //texto de quantidade de jogadas
+    [SerializeField] private TextMeshProUGUI MovesText;
 
     //referencia de todos os recipientes em cena
     private BottleController[] bottles;
@@ -55,10 +62,14 @@ public class BottlesController : MonoBehaviour
             if (bottles[x].GetIsDone())
                 bottlesDone++;
         }
-        
+
         //verificando se tem a quantidade de bottles necessária para completar a fase
         if (bottlesDone == victoryCondition)
-            GameManager.Instance.LoadNextLevel();
+        //GameManager.Instance.LoadNextLevel();
+        {
+            LevelDoneScreen.SetActive(true);
+            MovesText.text = GameManager.Instance.moves.ToString();
+        }
     }
 
     private Vector3 ChooseBottlePosition(int bottle)

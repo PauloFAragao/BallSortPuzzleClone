@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public bool gamePause;
 
+    public int moves = 0;
+
     private void Awake()
     {
         //setando fps para no maximo 60

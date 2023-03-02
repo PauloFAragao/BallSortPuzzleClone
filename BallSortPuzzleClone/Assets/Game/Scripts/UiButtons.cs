@@ -9,4 +9,9 @@ public class UiButtons : MonoBehaviour
             GameManager.Instance.ReloadLevel();
     }
 
+    public void NextLevelButton()
+    {
+        GameManager.Instance.LoadNextLevel();
+    }
+
 }

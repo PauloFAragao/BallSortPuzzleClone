@@ -78,9 +78,11 @@ public class BottleController : MonoBehaviour
 
         ballsAmount++;
 
+        //adicionando uma jogada
+        GameManager.Instance.moves++;
+
         //verificando se este recipiente está completo
         VerifyIfIsDone();
-
     }
 
     //limpa a referencia da bolinha que foi mandada para o outro recipiente
