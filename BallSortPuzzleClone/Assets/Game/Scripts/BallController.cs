@@ -8,10 +8,6 @@ public class BallController : MonoBehaviour
 
     [SerializeField] private Animator animator;
 
-    //para fazer a bolinha ir para a posição correta dentro do recipiente
-    private bool unselectCommand;
-    private Vector2 endPosition;
-
     //se a bolinha está se movendo
     private bool animated;
 
@@ -29,13 +25,6 @@ public class BallController : MonoBehaviour
         colorIndex = cIndex;
     }
 
-    public void SetUnselectCommand(Vector2 pos)
-    {
-        animated = true;
-        unselectCommand = true;
-        endPosition = pos;
-    }
-
     public int GetColorIndex()
     {
         return colorIndex;
@@ -46,36 +35,37 @@ public class BallController : MonoBehaviour
         return animated;
     }
 
-    //==========================================  ANIMAÇÕES  ==========================================
-    public void MoveBall(Vector3 finalPosition, float duration)
+    public void setIdleAnimation()
     {
-        StartCoroutine(MoveAnimation(finalPosition, duration));
+        animator.Play("Idle");
     }
+
+    //==========================================  ANIMAÇÕES  ==========================================
     
-    public void Select(Vector3 finalPosition, float duration)
+    public void Select(Vector3 finalPosition)
     {
-        StartCoroutine(MoveAnimation(finalPosition, duration));
+        StartCoroutine(MoveAnimation(finalPosition));
 
         animator.Play("Selected");
     }
 
-    public void Unselect(Vector3 finalPosition, float duration)
+    public void Unselect(Vector3 finalPosition)
     {
-        StartCoroutine(MoveAnimation(finalPosition, duration));
+        StartCoroutine(MoveAnimation(finalPosition));
 
         animator.Play("Unselected");
     }
 
     //animação de movimentação
-    private IEnumerator MoveAnimation(Vector3 finalPosition, float duration)
+    private IEnumerator MoveAnimation(Vector3 finalPosition)
     {
         Vector3 inicialPosition = transform.position;
 
         float t = 0;
 
-        while (t <= duration)
+        while (t <= 0.2f)
         {
-            transform.position = Vector3.Lerp(inicialPosition, finalPosition, (t / duration));
+            transform.position = Vector3.Lerp(inicialPosition, finalPosition, (t / 0.2f));
 
             t += Time.deltaTime;
 
@@ -86,16 +76,47 @@ public class BallController : MonoBehaviour
 
         //indicando que a bolinha não está mais se movendo
         animated = false;
+    }
 
-        //se a bolinha deve ir para a posição dela no fim dessa animação
-        if (unselectCommand)
+    public void MoveBall(Vector3 bottlePosition, Vector3 endPosition)
+    {
+        StartCoroutine(ChangeBottleAnimation(bottlePosition, endPosition));
+    }
+
+    private IEnumerator ChangeBottleAnimation(Vector3 bottlePosition, Vector3 endPosition)
+    {
+        Vector3 inicialPosition = transform.position;
+        float t = 0;
+
+        //movendo para a posição do outro recipiente
+        while (t <= 0.2f)
         {
-            animated = true;
-            unselectCommand = false;
-            StartCoroutine(MoveAnimation(endPosition, 0.2f));
+            transform.position = Vector3.Lerp(inicialPosition, bottlePosition, (t / 0.2f));
 
-            animator.Play("Unselected");
+            t += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
         }
+        transform.position = bottlePosition;
+
+        //animação da bolinha kicando
+        animator.Play("Unselected");
+
+        //movendo para a posição dentro do recipiente
+        inicialPosition = transform.position;
+        t = 0;
+        while (t <= 0.2f)
+        {
+            transform.position = Vector3.Lerp(inicialPosition, endPosition, (t / 0.2f));
+
+            t += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+        transform.position = endPosition;
+
+        //indicando que a bolinha não está mais se movendo
+        animated = false;
     }
 
 }

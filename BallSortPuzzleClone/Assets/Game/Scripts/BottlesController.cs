@@ -67,6 +67,11 @@ public class BottlesController : MonoBehaviour
         if (bottlesDone == victoryCondition)
         //GameManager.Instance.LoadNextLevel();
         {
+            Debug.Log("level done");
+            //salvando os dados
+            GameManager.Instance.SaveLevelData();
+
+            //ativando a tela de fase completa
             LevelDoneScreen.SetActive(true);
             MovesText.text = GameManager.Instance.moves.ToString();
         }

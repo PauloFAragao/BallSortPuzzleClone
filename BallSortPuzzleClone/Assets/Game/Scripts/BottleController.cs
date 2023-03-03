@@ -51,13 +51,13 @@ public class BottleController : MonoBehaviour
     public void SelectBall()
     {
         if (ballsAmount > 0)
-            balls[ballsAmount - 1].Select(positions[4].position, 0.2f);
+            balls[ballsAmount - 1].Select(positions[4].position);
     }
 
     //desseleciona a bolinha e manda ela de volta para o seu lugar
     public void UnselectBall()
     {
-        balls[ballsAmount - 1].Unselect(positions[ballsAmount - 1].position, 0.2f);
+        balls[ballsAmount - 1].Unselect(positions[ballsAmount - 1].position);
     }
 
     //método que vai ser chamado para transferir a bolinha para o outro recipiente
@@ -70,12 +70,14 @@ public class BottleController : MonoBehaviour
     //método que vai receber a referencia da bolinha que vai ser transferida para esse recipiente e vai mover ela 
     public void ReceiveBall(BallController ball)
     {
-        ball.MoveBall(positions[4].position, 0.2f);
+        //mudando a animação
+        ball.setIdleAnimation();
 
-        ball.SetUnselectCommand(positions[ballsAmount].position);
+        //movendo a bolinha
+        ball.MoveBall(positions[4].position, positions[ballsAmount].position);
 
+        //adicionando a bolinha ao array
         balls[ballsAmount] = ball;
-
         ballsAmount++;
 
         //adicionando uma jogada

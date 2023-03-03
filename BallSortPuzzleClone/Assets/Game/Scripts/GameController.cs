@@ -47,12 +47,17 @@ public class GameController : MonoBehaviour
                             if ( SecondBottle.GetBallsAmount() == 4 ||
                             (FirstBottle.GetTopColor() != SecondBottle.GetTopColor() && SecondBottle.GetBallsAmount() != 0) )
                             {
+                                //animação de desselecionar
                                 FirstBottle.UnselectBall();
 
-                                FirstBottle = null;
-                                SecondBottle = null;
+                                //atribuir a segunda bottle a primeira bottle
+                                FirstBottle = hit.collider.GetComponent<BottleController>();
 
-                                return;
+                                //animação de selecionar
+                                FirstBottle.SelectBall();
+
+                                //limpando o SecondBottle
+                                SecondBottle = null;
                             }
                             else
                             {
@@ -65,8 +70,6 @@ public class GameController : MonoBehaviour
                                 FirstBottle = null;
                                 SecondBottle = null;
                             }
-
-
                         }
                     }
                 }

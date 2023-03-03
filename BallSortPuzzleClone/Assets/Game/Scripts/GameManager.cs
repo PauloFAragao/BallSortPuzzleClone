@@ -40,7 +40,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        level = 0;
+        //carregando dados do jogo
+        LoadData();
+
+        //level = 0;
     }
 
     private void OnDestroy()
@@ -52,9 +55,12 @@ public class GameManager : MonoBehaviour
     {
         gamePause = false;//retirando o game pause
 
-        level++;//incrementando o level
+        //level++;//incrementando o level
 
         //SaveData();//salvando dados
+
+        //zerando as jogadas
+        moves = 0;
 
         //carregar o level
         SceneManager.LoadScene("SampleScene");
@@ -64,5 +70,20 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
     }
+
+    public void SaveLevelData()
+    {
+        //salvando o level
+        PlayerPrefs.SetInt("level", ++level);
+
+        Debug.Log("salvando: "+level);
+    }
+
+    private void LoadData()
+    {
+        //carregando o level
+        level = PlayerPrefs.GetInt("level");
+    }
+
     
 }
