@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
 
     public int moves = 0;
 
+    public int undoQuantify;
+    public int newBottleQuantify;
+
     private void Awake()
     {
         //setando fps para no maximo 60
@@ -71,19 +74,35 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
+    // ================================= métodos de save =================================
+
     public void SaveLevelData()
     {
         //salvando o level
         PlayerPrefs.SetInt("level", ++level);
 
-        Debug.Log("salvando: "+level);
+    }
+
+    public void SaveUndoQuantify()
+    {
+        PlayerPrefs.SetInt("undoQuantify", undoQuantify);
+    }
+
+    public void SaveNewBottleQuantify()
+    {
+        PlayerPrefs.SetInt("newBottleQuantify", newBottleQuantify);
     }
 
     private void LoadData()
     {
         //carregando o level
         level = PlayerPrefs.GetInt("level");
-    }
 
+        //carregando a quantidade de undos
+        undoQuantify = PlayerPrefs.GetInt("undoQuantify");
+
+        //carregando q quantidade de vezes que pode adicionar um recipiente
+         newBottleQuantify = PlayerPrefs.GetInt("newBottleQuantify");
+    }
     
 }

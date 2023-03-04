@@ -71,6 +71,8 @@ public class BottlesController : MonoBehaviour
             //salvando os dados
             GameManager.Instance.SaveLevelData();
 
+            GameManager.Instance.gamePause = true;
+
             //ativando a tela de fase completa
             LevelDoneScreen.SetActive(true);
             MovesText.text = GameManager.Instance.moves.ToString();

@@ -41,18 +41,28 @@ public class BallController : MonoBehaviour
     }
 
     //==========================================  ANIMAÇÕES  ==========================================
-    
+
     public void Select(Vector3 finalPosition)
     {
+        //indica que está animada
+        animated = true;
+
+        //animação de mover
         StartCoroutine(MoveAnimation(finalPosition));
 
+        //animação selected
         animator.Play("Selected");
     }
 
     public void Unselect(Vector3 finalPosition)
     {
+        //indica que está animada
+        animated = true;
+
+        //animação de mover
         StartCoroutine(MoveAnimation(finalPosition));
 
+        //animação unselected
         animator.Play("Unselected");
     }
 
@@ -80,6 +90,10 @@ public class BallController : MonoBehaviour
 
     public void MoveBall(Vector3 bottlePosition, Vector3 endPosition)
     {
+        //indica que está animada
+        animated = true;
+
+        //animação de mover
         StartCoroutine(ChangeBottleAnimation(bottlePosition, endPosition));
     }
 
